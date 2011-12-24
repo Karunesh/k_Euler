@@ -4,7 +4,7 @@ public class Prob7{
 		int number = 2;
 		
 		while(prime < 10001){
-			if(isPrime(number) == true)
+			if(isPrime(number))
 				prime++;
 			number++;
 		}
