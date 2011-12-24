@@ -16,7 +16,7 @@ public class Prob5{
 		int LCM = 1;
 		int mult = 1;
 		for(int i = 2; i <= max; i++){
-			if(isPrime(i) == true){
+			if(isPrime(i)){
 				mult = getGreatestPower(i, max);
 				LCM = LCM * mult;
 			}
