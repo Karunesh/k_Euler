@@ -5,6 +5,7 @@ from math import *
 limit = 2000000
 
 def isPrime(number):
+    # I should probably use a list here.
     if number == 2: return True
     elif number % 2 == 0: return False
     elif number == 3: return True
