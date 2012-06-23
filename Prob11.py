@@ -1,6 +1,6 @@
 # prob11.py
 
-# numbers we need to take product of.
+# number of numbers we need to take product of.
 prodNum = 4
 
 stringOfNumbers = """08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -24,33 +24,71 @@ stringOfNumbers = """08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"""
 
-def preprocess():
+def getListOfNumbers():
     "Return a list containing numbers in stringOfNumbers"
+    numbers = []
+    individualLines = stringOfNumbers.split('\n')
 
-    ###################################################################
-    #################### NEED TO PASS A list of lists (like 2d array)
-    ###################################################################
-     return(stringOfNumbers.split())
+    for individualLine in individualLines:
+        numberList = []
+        individualNumbers = individualLine.split(' ')
+
+        for numString in individualNumbers:
+            number = int(numString)
+            numberList.append(number)
+
+        numbers.append(numberList)
+
+    return(numbers)
 # end preprocess()
+
+def biggerInt(int1, int2):
+    if int1 > int2:
+        return int1
+    else:
+        return int2
+# end biggerInt()
 
 def getResult(list, num):
     """Return the maximum product of four numbers placed horizontally,
     vertically or diagonally adjacent."""
+    product = 1
+    end = int(len(list))
 
-    product = 0;
+    for i in range(0, end):
+       for j in range(0, end):
+            # Only left to right, top to bottom product.
+            # horizontal product.
+            if i < end - num:
+                prod = list[i][j] * list[i + 1][j] * list[i + 2][j] * list[i + 3][j]
+                product = biggerInt(product, prod)
 
-    for number in listOfNumbers:
-        
+            # vertical product
+            if j < end - num:
+                prod = list[i][j] * list[i][j + 1] * list[i][j + 2] * list[i][j + 3]
+                product = biggerInt(product, prod)
+
+            # Diagonal product. Firstly make sure we are not in the first two
+            # rows or columns.
+            if i in range(int(num / 2), end - int(num / 2)):
+                if j in range(int(num / 2), end - int(num / 2)):
+                    # Left up to right down.
+                    prod = list[i - 2][j - 2] * list[i - 1][j - 1] * list[i][j] * list[i + 1][j + 1]
+                    product = biggerInt(product, prod)
+
+                    # Right up to left down.
+                    prod = list[i + 2][j - 2] * list[i + 1][j - 1] * list[i][j] * list[i - 1][j + 1]
+                    product = biggerInt(product, prod)
+
+    return product         
 # end getResult()
 
 def main():
-    listOfNumbers = preprocess()
+    listOfNumbers = getListOfNumbers()
 
     result = getResult(listOfNumbers, prodNum)
     print(result)
+# end main
 
 if __name__ == "__main__":
     main()
-
-
-    
