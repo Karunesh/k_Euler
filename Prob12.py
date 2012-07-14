@@ -5,18 +5,24 @@ def getNumFactors(number):
     """
     Returns number of natural numbers that exactly divide number,
     including 1 and number itself.
+    -- Any number has factors of the form num1 * num2, where
+       num1 < number's square root and num2 > number's square root.
+       This means that finding number of factors upto the square
+       root and multiplying by 2 will give us the number of factors.
+    -- EDGE CASE: If the number is a perfect square, we should be
+       counting its square root only once and not twice.
     """
 
     numFactors = 2 # Already accounting for 1 and number itself.
 
-    i = 2
-    for i in range(2, int(number / 2)):
-        if (number % i) == 0:
-            numFactors += 1
+    if math.sqrt(number) == int(math.sqrt(number)): # number is a perfect square.
+        numFactors += 1
 
+    for i in range(2, int(math.sqrt(number))):
+        if (number % i) == 0:
+            numFactors += 2
         i += 1
 
-    print("num := ", number, "     numFactors := ", numFactors)    
     return numFactors
 
 # end getNumFactors
@@ -29,7 +35,6 @@ def main():
     while numFactors <= 500:
         currentTriNum += currentNum
         currentNum += 1
-        #print(currentTriNum, ", ", currentNum)
         numFactors = getNumFactors(currentTriNum)
     else:
         print("currentTriNum := ", currentTriNum)
